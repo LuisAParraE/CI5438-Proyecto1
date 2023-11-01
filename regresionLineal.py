@@ -1,5 +1,6 @@
 import pandas
 import numpy
+import matplotlib.pyplot as plt
 
 #Aca se encuentran todas las variables dummy para introducir como datos de entrada
 dummyMake = ["Audi", "BMW", "Chevrolet","Datsun", "Ferrari","Fiat", "Ford", "Honda", "Hyundai", "Isuzu",
@@ -118,10 +119,19 @@ def train(dataset,results,alpha,n):
     #Actualizacion de los pesos
     i = 0
     while (i<n):
+        newLoss = 0
         print(i)
+
+        #Aca se actualizan los pesos
         for j in range(1,len(weights)):
             for k in range(0,len(dataset)):
                 weights[j] = weights[j] + alpha * dataset[k][j-1]*(results.iloc[k] - linearRegression(dataset[k]))
+
+        #Aca se calcula la perdida
+        for j in range(0,len(dataset)):
+            newLoss = newLoss + (results.iloc[j] - linearRegression(dataset[j]))**2
+
+        loss.append(newLoss)
         i = i+1
 
 
@@ -137,14 +147,23 @@ def linearRegression(values):
     return h
 
 def main():
+    #Numero de iteraciones
+    n = 100
+    #Se lee el CSV con pandas
     df = pandas.read_csv('CarDekho.csv')
     
+    #Se procesan los datos para tener valores interactuables
     clearDataset = formatDataset(df)
 
-    train(clearDataset,df["Price"],0.0001,50)
-    print(weights)
+    #Entrenamos el modelo
+    train(clearDataset,df["Price"],0.00001,n)
 
-    for i in range(0,20):
-        print(linearRegression(clearDataset[i]))
+    plt.plot(range(1,n+1),loss)
+    plt.ylabel("Perdida")
+    plt.xlabel("n Iteraciones")
+    plt.show()
+
+    #for i in range(0,20):
+    #    print(linearRegression(clearDataset[i]))
 
 main()
