@@ -1,6 +1,8 @@
 import pandas
 import numpy
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+
 
 #Aca se encuentran todas las variables dummy para introducir como datos de entrada
 dummyMake = ["Audi", "BMW", "Chevrolet","Datsun", "Ferrari","Fiat", "Ford", "Honda", "Hyundai", "Isuzu",
@@ -14,29 +16,30 @@ dummyTransmision = ["Manual", "Automatic"]
 
 dummyOwner = ["First", "Second", "Third", "Fourth", "UnRegistered Car"]
 
-dummySellerType = ["Individual", "Corporate"]
-
 dummySeats = [2,4,5,6,7,8]
 
 #Pesos que usara la regresión final
 weights = []
+bestWeights = []
 
-#La perdida por iteración
-loss = []
+#La perdida por iteración en el entrenamiento
+trainLoss = []
+meanTrainLoss = []
+lessTrainLoss = 200
 
 #Función para agarrar la data cruda leida por pandas y procesarla a algo utilizable
 def formatDataset(dataset):
     clearDataset = []
+    clearAnswer = []
 
-    #Buscamos el mayor y menor de ciertas columnas para poder parametrizarlas
-    minYear = dataset["Year"].max()
-    maxYear = dataset["Year"].min()
+    #Llenamos los valores nulos con la Moda
+    dataset["Seating Capacity"] = dataset["Seating Capacity"].fillna(dataset["Seating Capacity"].mode()[0])
+    dataset["Fuel Tank Capacity"] = dataset["Fuel Tank Capacity"].fillna(dataset["Fuel Tank Capacity"].mode()[0])
 
-    maxKm = dataset["Kilometer"].max()
-    minKm = dataset["Kilometer"].min()
-
-    maxGasTank = dataset["Fuel Tank Capacity"].max()
-    minGasTank = dataset["Fuel Tank Capacity"].min()
+    #Normalizamos los valores
+    dataset["Year"] = (dataset["Year"] - dataset["Year"].min()) / (dataset["Year"].max() - dataset["Year"].min())
+    dataset["Kilometer"] = (dataset["Kilometer"] - dataset["Kilometer"].min()) / (dataset["Kilometer"].max() - dataset["Kilometer"].min())
+    dataset["Fuel Tank Capacity"] = (dataset["Fuel Tank Capacity"] - dataset["Fuel Tank Capacity"].min()) / (dataset["Fuel Tank Capacity"].max() - dataset["Fuel Tank Capacity"].min())
 
     #Este ciclo va por todas las filas del data set
     for i in range(0,len(dataset.index)):
@@ -51,12 +54,10 @@ def formatDataset(dataset):
                 newRow.append(0)
 
         #Normalizamos el año
-        normalizeYear = (rawRow["Year"] - minYear)/(maxYear-minYear)
-        newRow.append(normalizeYear)
+        newRow.append(rawRow["Year"])
         
         #Normalizamos los Km
-        normalizeKm = (rawRow["Kilometer"] - minKm)/(maxKm-minKm)
-        newRow.append(normalizeKm)
+        newRow.append(rawRow["Kilometer"])
 
         #Verificamos las variables dummy del tipo de gasolina
         for gasType in dummyFuelType:
@@ -78,92 +79,118 @@ def formatDataset(dataset):
                 newRow.append(1)
             else:
                 newRow.append(0)
-        
-        #Verificamos las variables dummy del tipo de vendedor
-        for seller in dummySellerType:
-            if rawRow["Seller Type"] == seller:
-                newRow.append(1)
-            else:
-                newRow.append(0)
 
         #Verificamos las variables dummy de la cantidad de asientos
         for seats in dummySeats:
-            if rawRow["Seating Capacity"] == seats or (numpy.isnan(rawRow["Seating Capacity"]) and (5 ==seats)):
+            if rawRow["Seating Capacity"] == seats:
                 newRow.append(1)
             else:
                 newRow.append(0)
 
         #Normalizamos la capacidad del tanque
-        if numpy.isnan(rawRow["Fuel Tank Capacity"]):
-            normalizeTank = (35 - minGasTank)/(maxGasTank-minGasTank)
-            newRow.append(normalizeTank)
-        else:
-            normalizeTank = (rawRow["Fuel Tank Capacity"] - minGasTank)/(maxGasTank-minGasTank)
-            newRow.append(normalizeTank)
+        newRow.append(rawRow["Fuel Tank Capacity"])
         
+        clearAnswer.append(rawRow["Price"])
         clearDataset.append(newRow)
 
-    return clearDataset
+    return clearDataset,clearAnswer
 
 #Función para entrenar la data, si los pesos no estan inicializados, se inicializan
 def train(dataset,results,alpha,n):
 
     #Inicialización de los pesos
-    global weights
-    if len(weights)-1 != len(dataset[0]):
-        weights = []
+    global weights, bestWeights,lessTrainLoss
+    
+    weights = []
 
-        for w in range(0, len(dataset[0])+1):
-            weights.append(0)
+    for w in range(0, len(dataset[0])):
+        weights.append(0)
 
     #Actualizacion de los pesos
     i = 0
     while (i<n):
-        newLoss = 0
+        newtrainLoss = 0
         print(i)
 
         #Aca se actualizan los pesos
-        for j in range(1,len(weights)):
+        for j in range(0,len(weights)):
+            add = 0
             for k in range(0,len(dataset)):
-                weights[j] = weights[j] + alpha * dataset[k][j-1]*(results.iloc[k] - linearRegression(dataset[k]))
-
+                add = add + dataset[k][j] * (results[k] - linearRegression(dataset[k]))     
+            weights[j] = weights[j] + alpha * add
+        
         #Aca se calcula la perdida
         for j in range(0,len(dataset)):
-            newLoss = newLoss + (results.iloc[j] - linearRegression(dataset[j]))**2
-
-        loss.append(newLoss)
+            newtrainLoss = newtrainLoss + (results[j] - linearRegression(dataset[j]))**2
+        trainLoss.append(newtrainLoss)
+        meanTrainLoss.append(newtrainLoss/len(dataset))
+        #Guardamos ls mejores pesos con su perdida
+        if newtrainLoss < lessTrainLoss:
+            lessTrainLoss = newtrainLoss
+            bestWeights = weights
+        
         i = i+1
-
 
 #Función Base de regresión para multiples variables
 def linearRegression(values):
     global weights
 
-    h = 1*weights[0] 
-
-    for i in range(0,len(values)):
-        h = h + weights[i+1]*values[i]
+    h = 0
+    for i in range(0,len(weights)):
+        h = h + weights[i] * values[i]
 
     return h
 
 def main():
+    global lessTrainLoss
     #Numero de iteraciones
-    n = 100
+    n = 5000
+    alpha = 0.001
+
     #Se lee el CSV con pandas
     df = pandas.read_csv('CarDekho.csv')
+
+    df["Price"] = (df["Price"] - df["Price"].min()) / (df["Price"].max() - df["Price"].min())
+    histogram = df.hist(column=["Price", "Year","Seating Capacity", "Fuel Tank Capacity", "Kilometer"],bins=50)
+    plt.show()
     
+    #boxplot = df.boxplot(column=["Fuel Tank Capacity"])
+    #boxplot.plot()
+    #plt.show()
+    
+    #boxplot = df.boxplot(column=["Year"])
+    #boxplot.plot()
+    #plt.show()
+    
+    #boxplot = df.boxplot(column=["Kilometer"])
+    #boxplot.plot()
+    #plt.show()
     #Se procesan los datos para tener valores interactuables
-    clearDataset = formatDataset(df)
+    formatVariables, formatPrice = formatDataset(df)
 
+    #Hacemos el Cross Data Validation
+    dataTraining,dataTest,answerTraining,answerTest = train_test_split(
+        formatVariables, formatPrice,test_size= 0.2,shuffle=True
+    )
+    
     #Entrenamos el modelo
-    train(clearDataset,df["Price"],0.00001,n)
+    train(dataTraining,answerTraining,alpha,n)
+    print(weights)
 
-    plt.plot(range(1,n+1),loss)
-    plt.ylabel("Perdida")
-    plt.xlabel("n Iteraciones")
+    plt.plot(range(1,n+1),trainLoss)
+    plt.title(f"Loss with alpha:{alpha}")
+    plt.axis((0,n,0,15))
+    plt.ylabel("Loss")
+    plt.xlabel("Iteration Number")
     plt.show()
 
-    #for i in range(0,20):
-    #    print(linearRegression(clearDataset[i]))
+    plt.plot(range(1,n+1),meanTrainLoss)
+    plt.title(f"Mean Loss with alpha:{alpha}")
+    plt.axis((0,n,0,0.01))
+    plt.ylabel("Mean Loss")
+    plt.xlabel("Iteration Number")
+    plt.show()
+
+    print(f"menor perdida:{lessTrainLoss}")
 
 main()
