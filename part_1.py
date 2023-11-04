@@ -1,7 +1,6 @@
 import random
 import matplotlib.pyplot as plot
 import numpy as np
-from sklearn import preprocessing
 
 def genY(X,W):
     return X[1]*W[2]+X[0]*W[1]+W[0]
@@ -14,10 +13,11 @@ def descensoGradiente(X,Y,W,alpha):
     return W
 
 def main():
-    rng1 = np.random.default_rng()
-    rng2 = np.random.default_rng()
-    rng3 = np.random.default_rng()
-    rng4 = np.random.default_rng()
+    rng1 = np.random.default_rng(33)
+    rng2 = np.random.default_rng(34)
+    rng3 = np.random.default_rng(35)
+    rng4 = np.random.default_rng(36)
+    rng5 = np.random.default_rng(37)
     X1 = np.array(sorted(list(range(5))*200)) + rng1.normal(size=1000, scale=0.5)
     X2 = np.array(sorted(list(range(5))*200)) + rng2.normal(size=1000, scale=0.5)
     X3 = np.array(sorted(list(range(5))*200)) + rng4.normal(size=1000, scale=0.5)
@@ -26,19 +26,19 @@ def main():
     W.append(random.choice(X1))
     W.append(random.choice(X2))
     W.append(random.choice(X3))
-    Y = np.array(sorted(list(range(5))*200)) + rng4.normal(size=1000, scale=0.5)
-    alpha = 0.0001
-    epsilon = 0.46
+    Y = np.array(sorted(list(range(5))*200)) + rng5.normal(size=1000, scale=0.5)
+    alpha = 0.000001
+    epsilon = 0.47
     n = 0
     print(f"W: {W}")
     error = []
-    while n < 10000:
+    while n < 50000:
         W = descensoGradiente(X,Y,W,alpha)
         Y_pred = genY(X,W)
         error.append(sum((Y-Y_pred)**2)/len(Y))
         print(error[-1])
         if error[-1] < epsilon:
-            print("Holis")
+            print("Convergió")
             break
         n = n+1
         print(n)
