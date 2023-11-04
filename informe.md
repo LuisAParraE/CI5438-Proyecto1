@@ -12,14 +12,17 @@ Se usó la función dada en clase para el caso multivariado. La regresión linea
 
 La función de pérdida cuadrática usada fue $L^2(y,\hat{y}) = (y - \hat{y})^2$, de acuerdo al enunciado del proyecto. 
 
-Dentro del código se definió que la condición de convergencia para las iteraciones fuera de $50.000$ iteraciones, un $\alpha = 0.000001$ y $\epsilon = 0.50$ con un seed fijo. Si se quita el seed fijo, los valores oscilaban entre $0.47$ y $0.51$ cuando disminuía el error, sin tener muchos cambios cuando alcanzaba la convergencia.
+Dentro del código se definió que la condición de convergencia para las iteraciones fuera de $50.000$ iteraciones, un $\alpha = 0.000001$ y $\epsilon = 0.463$ con un seed fijo. Si se quita el seed fijo, los valores oscilaban entre $0.47$ y $0.51$ cuando disminuía el error, sin tener muchos cambios cuando alcanzaba la convergencia.
 
 La función definida para hacer las pruebas fue $f(x) = w_0+w_1 \cdot x_1+w_2 \cdot x_2$
 
 ![Plano y función graficada](images/Plot_1.png)
 
+Se observa que la línea recta está aproximadamente en el medio de todos los puntos, siendo una regresión lineal que aproxima a la mayoría de los valores dados.
 
 ![Gráfico de convergencia del error](images/Plot_error.png)
+
+En la gráfica se observa la convergencia del error hacia las 13000 iteraciones, precisamente en el valor $n = 13.476$, con un $\epsilon = 0.462999$
 
 ## Parte 2 - Preprocesamiento de los datos
 
