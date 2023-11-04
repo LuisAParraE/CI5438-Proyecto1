@@ -8,7 +8,7 @@ Se implementó la función de descenso de gradiente para la regresión lineal mu
 - Un número de iteraciones fijo
 - Que la función de pérdida cuadrática sea menor a un $\epsilon$ definido pequeño.
 
-Se usó la función dada en clase para el caso monovariado, dado que no fue posible implementar la función multivariada. La regresión lineal usada viene definida por: $h_w(x) = w_0+w_1 \cdot x$.
+Se usó la función dada en clase para el caso multivariado. La regresión lineal usada viene definida por: $h_w(x) = w_0+w_1 \cdot x_1 +  w_2 \cdot x_2$.
 
 La función de pérdida cuadrática usada fue $L^2(y,\hat{y}) = (y - \hat{y})^2$, de acuerdo al enunciado del proyecto. 
 
