@@ -92,47 +92,47 @@ Veremos en detalle las gráficas con la pérdida y la pérdida media para cada g
 
 #### Caso de 100 iteraciones
 Pérdida para $\alpha$ 0.001 y 0.0001
-![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_1_100.png)
+![Pérdida para $\alpha$ 0.001 y 0.0001](/images/loss_1_100.png)
 
 Pérdida para $\alpha$ 0.00001 y 0.00005
-![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_2_100.png)
+![Pérdida para $\alpha$ 0.0001 y 0.0005](/images/loss_2_100.png)
 
 Pérdida media para $\alpha$ 0.001 y 0.0001
-![Pérdida media 0.001 y 0.0001](images/mean_loss_1_100.png)
+![Pérdida media 0.001 y 0.0001](/images/mean_loss_1_100.png)
 
 Pérdida media para $\alpha$ 0.00001 y 0.00005
-![Pérdida media 0.00001 y 0.00005](images/mean_loss2_100.png)
+![Pérdida media 0.00001 y 0.00005](/images/mean_loss2_100.png)
 
 #### Caso de 300 iteraciones
 Pérdida para $\alpha$ 0.001 y 0.0001
-![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_1_300.png)
+![Pérdida para $\alpha$ 0.001 y 0.0001](/images/loss_1_300.png)
 Pérdida para $\alpha$ 0.0001 y 0.0005
-![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_2_300.png)
+![Pérdida para $\alpha$ 0.0001 y 0.0005](/images/loss_2_300.png)
 Pérdida media para $\alpha$ 0.001 y 0.0001
-![Pérdida media para $\alpha$ 0.001 y 0.0001](images/mean_loss_1_300.png)
+![Pérdida media para $\alpha$ 0.001 y 0.0001](/images/mean_loss_1_300.png)
 Pérdida media para $\alpha$ 0.00001 y 0.00005
-![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_2_300.png)
+![Pérdida media para $\alpha$ 0.00001 y 0.00005](/images/mean_loss_2_300.png)
 
 #### Caso de 500 iteraciones
 Pérdida para $\alpha$ 0.001 y 0.0001
-![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_1_500.png)
+![Pérdida para $\alpha$ 0.001 y 0.0001](/images/loss_1_500.png)
 Pérdida para $\alpha$ 0.0001 y 0.0005
-![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_2_500.png)
+![Pérdida para $\alpha$ 0.0001 y 0.0005](/images/loss_2_500.png)
 Pérdida media para $\alpha$ 0.001 y 0.0001
-![Pérdida media para $\alpha$ 0.001 y 0.0001](images/mean_loss_1_500.png)
+![Pérdida media para $\alpha$ 0.001 y 0.0001](/images/mean_loss_1_500.png)
 Pérdida media para $\alpha$ 0.00001 y 0.00005
-![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_2_500.png)
+![Pérdida media para $\alpha$ 0.00001 y 0.00005](/images/mean_loss_2_500.png)
 
 
 #### Caso de 1000 iteraciones
 Pérdida para $\alpha$ 0.001 y 0.0001
-![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_2_1000.png)
+![Pérdida para $\alpha$ 0.001 y 0.0001](/images/loss_2_1000.png)
 Pérdida para $\alpha$ 0.0001 y 0.0005
-![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_1_1000.png)
+![Pérdida para $\alpha$ 0.0001 y 0.0005](/images/loss_1_1000.png)
 Pérdida media para $\alpha$ 0.001 y 0.0001
-![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_1_1000.png)
+![Pérdida media para $\alpha$ 0.00001 y 0.00005](/images/mean_loss_1_1000.png)
 Pérdida media para $\alpha$ 0.00001 y 0.00005
-![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_2_1000.png)
+![Pérdida media para $\alpha$ 0.00001 y 0.00005](/images/mean_loss_2_1000.png)
 
 ### Hipótesis
 
