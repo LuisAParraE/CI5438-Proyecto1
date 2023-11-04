@@ -1,5 +1,7 @@
 # Informe del Proyecto I - CI5438
 
+#### Elaborado por Jorge Correia y Luis Parra
+
 ## Implementación - Parte 1
 
 Se implementó la función de descenso de gradiente para la regresión lineal multivariada, usando como condiciones de convergencia:
@@ -124,3 +126,13 @@ Pérdida media para $\alpha$ 0.001 y 0.0001
 ![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_1_1000.png)
 Pérdida media para $\alpha$ 0.00001 y 0.00005
 ![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_2_1000.png)
+
+### Hipótesis
+
+Para nuestra hiṕotesis, seleccionamos:
+-  Tasa de aprendizaje $\alpha = 0.001$
+-  Tiempo de ejecución: aproximadamente 1 hora
+-  Tiempo por iteración: alrededor de 1-2 segundos
+-  Número de iteraciones: 5000
+
+Con estos valores, la ejecución convergiendo lentamente, vemos que de la iteración 1000 a la 5000 no hay un cambio tan significativo, pero sigue bajando la pérdida, lo que podemos concluir que es posible que haya una convergencia con una mayor cantidad de iteraciones más adelante, así como realizar optimizaciones de tiempo para que sea más rápido ejecutar un numero de épocas o iteraciones muchísimo más grandes.
