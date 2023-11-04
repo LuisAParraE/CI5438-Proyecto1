@@ -98,11 +98,11 @@ def formatDataset(dataset):
 #Función para entrenar la data, si los pesos no estan inicializados, se inicializan
 def train(dataset,results,alpha,n):
 
-    #Inicialización de los pesos
+    
     global weights, bestWeights,lessTrainLoss
     
     weights = []
-
+    #Inicialización de los pesos
     for w in range(0, len(dataset[0])):
         weights.append(0)
 
@@ -124,6 +124,7 @@ def train(dataset,results,alpha,n):
             newtrainLoss = newtrainLoss + (results[j] - linearRegression(dataset[j]))**2
         trainLoss.append(newtrainLoss)
         meanTrainLoss.append(newtrainLoss/len(dataset))
+
         #Guardamos ls mejores pesos con su perdida
         if newtrainLoss < lessTrainLoss:
             lessTrainLoss = newtrainLoss
@@ -175,7 +176,9 @@ def main():
     
     #Entrenamos el modelo
     train(dataTraining,answerTraining,alpha,n)
-    print(weights)
+    
+    #imprimimos los pesos
+    print(bestWeights)
 
     plt.plot(range(1,n+1),trainLoss)
     plt.title(f"Loss with alpha:{alpha}")
