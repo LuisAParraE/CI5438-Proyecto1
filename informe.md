@@ -28,8 +28,7 @@ Los datos a ser procesados provienen del dataset `CarDekho.csv`. Este dataset es
 - Seating Capacity
 - Fuel Tank Capacity
 
-
-Estos atributos serían las columnas de datos, si bien, existen otros factores que podrían ser influyentes como el torque y la fuerza, no conseguimos una manera correcta de representar ambos números, por otra parte, definirlos como variables categóricas no era viable dada la gran cantidad de variables que surgirían por tomar esta acción. Para los casos de *Make*, *Transmission*, *Seating Capacity*, *Fuel Type* y *Owner* se subdividió en variables dummy, es decir, variables dicotómicas que pueden tomar valores 1 o 0, siendo una variable nueva cada una de los elementos únicos de Make. 
+Estos atributos serían las columnas de datos, si bien, existen otros factores que podrían ser influyentes como el torque y la fuerza, no conseguimos una manera correcta de representar ambos números, por otra parte, definirlos como variables categóricas no era viable dada la gran cantidad de variables que surgirían por tomar esta acción. Para los casos de *Make*, *Transmission*, *Seating Capacity*, *Fuel Type* y *Owner* se subdividió en variables dummy, es decir, variables dicotómicas que pueden tomar valores 1 o 0, siendo una variable nueva cada una de los elementos únicos de Make.
 
 En el caso de *Seating Capacity* se optó por modelarlo como una variable categórica y no contínua, dado que son pocas opciones y solo puede adoptar valores enteros positivos, en el dataset estaba subdivido de 2 a 8.
 
@@ -43,7 +42,7 @@ Además de esto se eliminaron los siguientes elementos que se consideraban atíp
 - Tipos de combustible que solo tenían 1 o 2 casos como *CNG+CNG*,*PETROL + CNG* y *PETROL + LPG*
 - Owner se eliminó el caso de *4 or more* ya que no tenía casos significativos.
 
-Se tienen los casos de:
+Podemos observar ciertos ejemplos de casos donde hubo valores atípicos:
 
 #### Fuel Tank Capacity
 
@@ -63,16 +62,65 @@ Este diagrama de caja muestra la distancia recorrida por el carro, donde un carr
 
 ![Kilometer](/images/box_plot_kilometer.png)
 
-## Parte 3 - 
+Y en más detalle, los comportamientos en este histograma:
 
-Comparativa de Mejor pérdida, para las iteraciones dado un alpha (Tasa de aprendizaje)
- | Iteraciones/Alpha | 0.001 | 0.0001 | 0.00005 | 0.00001 |
+<img src="images/histograms.png" alt="Histograms" style="width:100%;height:100%" />
+
+## Parte 3 - Entrenamiento del modelo
+
+En el siguiente cuadro podemos observar diferentes valores para $\alpha$ (Tasa de Aprendizaje) que se utilizaron, en conjunto de las mismas condiciones para medir el comportamiento. Podemos observar el valor que aprende más rápido es 0.001, siendo que tiene el mejor rendimiento del resto. Le sigue es 0.0001 un poco más atrás, ya de ahí en adelante la tasa de aprendizaje es extremadamente baja y tarda mucho en aprender. Se probó también con 0.1, pero esto causaba un overflow ya que era muy grande. Por lo que el punto ideal debe rondar entre 0.01 y 0.001.
+
+Cabe acotar que los tiempos por iteraciones eran alrededor de 1-2 segundos, por lo que se probaron con una cantidad de tiempo comprensibles, esto capaz se deba a que se está utilizando Python puro y no se emplearon librerías como *numpy* para agilizar el procesamiento de la información.
+
+ | Iteraciones/$\alpha$ | 0.001 | 0.0001 | 0.00005 | 0.00001 |
   :-----------: |------|-------|-----------|-------- |
  | 100 | 3.118280139 | 4.389778897 | 4.685985727 | 5.992504547|
  | 300 |2.327452545 | 2.985638202| 4.430267141 | 5.275937336 |
  | 500 | 2.177081523| 3.479149128 | 4.173399578 |  5.229644753|
  | 1000| 1.886570943| 3.114268318| 3.564708046 | 4.133306292|
 
+Veremos en detalle las gráficas con la pérdida y la pérdida media para cada grupo de iteraciones:
+
+#### Caso de 100 iteraciones
+Pérdida para $\alpha$ 0.001 y 0.0001
+![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_1_100.png)
+
+Pérdida para $\alpha$ 0.00001 y 0.00005
+![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_2_100.png)
+
+Pérdida media para $\alpha$ 0.001 y 0.0001
+![Pérdida media 0.001 y 0.0001](images/mean_loss_1_100.png)
+
+Pérdida media para $\alpha$ 0.00001 y 0.00005
+![Pérdida media 0.00001 y 0.00005](images/mean_loss2_100.png)
+
+#### Caso de 300 iteraciones
+Pérdida para $\alpha$ 0.001 y 0.0001
+![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_1_300.png)
+Pérdida para $\alpha$ 0.0001 y 0.0005
+![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_2_300.png)
+Pérdida media para $\alpha$ 0.001 y 0.0001
+![Pérdida media para $\alpha$ 0.001 y 0.0001](images/mean_loss_1_300.png)
+Pérdida media para $\alpha$ 0.00001 y 0.00005
+![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_2_300.png)
+
+#### Caso de 500 iteraciones
+Pérdida para $\alpha$ 0.001 y 0.0001
+![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_1_500.png)
+Pérdida para $\alpha$ 0.0001 y 0.0005
+![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_2_500.png)
+Pérdida media para $\alpha$ 0.001 y 0.0001
+![Pérdida media para $\alpha$ 0.001 y 0.0001](images/mean_loss_1_500.png)
+Pérdida media para $\alpha$ 0.00001 y 0.00005
+![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_2_500.png)
 
 
-
+#### Caso de 1000 iteraciones
+Pérdida para $\alpha$ 0.001 y 0.0001
+![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_2_1000.png)
+Pérdida para $\alpha$ 0.0001 y 0.0005
+![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_1_1000.png)
+Pérdida media para $\alpha$ 0.001 y 0.0001
+![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_1_1000.png)
+Pérdida media para $\alpha$ 0.00001 y 0.00005
+![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_2_1000.png)
