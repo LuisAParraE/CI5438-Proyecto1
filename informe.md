@@ -90,6 +90,8 @@ Cabe acotar que los tiempos por iteraciones eran alrededor de 1-2 segundos, por 
 
 Veremos en detalle las gráficas con la pérdida y la pérdida media para cada grupo de iteraciones:
 
+Nota: hay un error en la visualización de las imágenes en el Markdown.
+
 #### Caso de 100 iteraciones
 Pérdida para $\alpha$ 0.001 y 0.0001
 ![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_1_100.png)
