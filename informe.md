@@ -115,13 +115,13 @@ Pérdida media para $\alpha$ 0.00001 y 0.00005
 
 #### Caso de 500 iteraciones
 Pérdida para $\alpha$ 0.001 y 0.0001
-![Pérdida para $\alpha$ 0.001 y 0.0001](images/loss_1_500.png)
+![Pérdida para alpha 0.001 y 0.0001](images/loss_1_500.png)
 Pérdida para $\alpha$ 0.0001 y 0.0005
-![Pérdida para $\alpha$ 0.0001 y 0.0005](images/loss_2_500.png)
+![Pérdida para alpha 0.0001 y 0.0005](images/loss_2_500.png)
 Pérdida media para $\alpha$ 0.001 y 0.0001
-![Pérdida media para $\alpha$ 0.001 y 0.0001](images/mean_loss_1_500.png)
+![Pérdida media para alpha 0.001 y 0.0001](images/mean_loss_1_500.png)
 Pérdida media para $\alpha$ 0.00001 y 0.00005
-![Pérdida media para $\alpha$ 0.00001 y 0.00005](images/mean_loss_2_500.png)
+![Pérdida media para alpha 0.00001 y 0.00005](images/mean_loss_2_500.png)
 
 
 #### Caso de 1000 iteraciones
